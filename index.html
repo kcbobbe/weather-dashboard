@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./script.js"></script>
+  </head>
+  <body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <h1 class="navbar-item">
+          Weather Dashboard
+        </h1>
+      </div>
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <!-- navbar items -->
+      </div>
+    
+      <div class="navbar-end">
+        <div class="navbar-item">
+          Your location is: Chapel Hill, NC
+        </div>
+      </div>
+
+    </div>
+    </nav>
+
+
+    <div class="columns">
+
+      <div class="column">
+        <!-- <section class="section" style="background-color:gray">
+          <p class="subtitle">
+            My first website with <strong>Bulma</strong>!
+          </p>
+        </section> -->
+
+        <section class="section">
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+
+            <article class="tile is-child box">
+              <p class="title">Chapel Hill</p>
+              <p class="subtitle">02/03/2020</p>
+              <div class="content">
+                <p>Temperature:</p>
+                <p>Humidity:</p>
+                <p>Wind Speed:</p>
+                <p>UV index:</p>
+              </div>
+            </article>
+
+            </div>
+          </div>
+
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title">5 Day Forecast</p>
+            </article>
+            </div>
+          </div>
+
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p><strong>02/04/2020</strong></p>
+                <div class="content">
+                  <div>Icon</div>
+                  <div>Temperature</div>
+                  <div>Humidity</div>
+                </div>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                day two
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                day three
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                day four
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                day five
+              </article>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+      <div class="column is-one-third">
+        <section class="section">
+          <nav class="panel">
+            <p class="panel-heading">
+              Search for a city
+            </p>
+            <div class="panel-block">
+              <p class="control has-icons-left">
+                <input class="input" type="text" placeholder="Search">
+                <span class="icon is-left">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+              </p>
+            </div>
+            <a class="panel-block is-active">
+              Chapel Hill
+            </a>
+            <a class="panel-block">
+              San Francisco
+            </a>
+            <a class="panel-block">
+              Chicago
+            </a>
+            
+            <div class="panel-block">
+              <button class="button is-link is-outlined is-danger is-fullwidth">
+                Clear History
+              </button>
+            </div>
+          </nav>
+
+        </section>
+      </div>
+    </div>    
+  </body>
+</html>
