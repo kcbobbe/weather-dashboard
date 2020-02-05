@@ -25,7 +25,7 @@
     
       <div class="navbar-end">
         <div class="navbar-item">
-          Your location is: Chapel Hill, NC
+          Your location is: <span id="headerCity"></span>
         </div>
       </div>
 
@@ -46,14 +46,16 @@
           <div class="tile is-ancestor">
             <div class="tile is-parent">
 
-            <article class="tile is-child box">
-              <p class="title">Chapel Hill</p>
-              <p class="subtitle">02/03/2020</p>
+            <article class="tile is-child box" style="text-align:center">
+              <p class="title" id="currentCity"></p>
+              <p class="subtitle" id="currentDate"></p>
+              
               <div class="content">
-                <p>Temperature:</p>
-                <p>Humidity:</p>
-                <p>Wind Speed:</p>
-                <p>UV index:</p>
+                <img id="currentIcon">
+                <div id="currentTemperature"></div>
+                <div id="currentHumidity"></div>
+                <div id="currentWindSpeed"></div>
+                <div id="currentUVIndex"></div>
               </div>
             </article>
 
@@ -62,45 +64,40 @@
 
           <div class="tile is-ancestor">
             <div class="tile is-parent">
-            <article class="tile is-child box">
+            <article class="tile is-child" style="text-align:center">
               <p class="title">5 Day Forecast</p>
             </article>
             </div>
           </div>
 
-          <div class="tile is-ancestor">
+          <div class="tile is-ancestor five-day-container">
+
             <div class="tile is-parent">
-              <article class="tile is-child box">
-                <p><strong>02/04/2020</strong></p>
-                <div class="content">
-                  <div>Icon</div>
-                  <div>Temperature</div>
-                  <div>Humidity</div>
+              <article class="tile is-child box"  style="text-align:center">
+                <div class="content" id="day1">
                 </div>
               </article>
             </div>
 
             <div class="tile is-parent">
-              <article class="tile is-child box">
-                day two
+              <article class="tile is-child box" style="text-align:center">
+                <div class="content" id="day2">
+                </div>
               </article>
             </div>
 
             <div class="tile is-parent">
-              <article class="tile is-child box">
-                day three
+              <article class="tile is-child box" id="day3" style="text-align:center">
               </article>
             </div>
 
             <div class="tile is-parent">
-              <article class="tile is-child box">
-                day four
+              <article class="tile is-child box" id="day4" style="text-align:center">
               </article>
             </div>
 
             <div class="tile is-parent">
-              <article class="tile is-child box">
-                day five
+              <article class="tile is-child box" id="day5" style="text-align:center">
               </article>
             </div>
 
@@ -116,24 +113,25 @@
             </p>
             <div class="panel-block">
               <p class="control has-icons-left">
-                <input class="input" type="text" placeholder="Search">
+                <input id="citySearch" class="input" type="text" placeholder="Search">
                 <span class="icon is-left">
                   <i class="fas fa-search" aria-hidden="true"></i>
                 </span>
               </p>
             </div>
-            <a class="panel-block is-active">
-              Chapel Hill
-            </a>
-            <a class="panel-block">
-              San Francisco
-            </a>
-            <a class="panel-block">
-              Chicago
-            </a>
-            
+            <div id="cityHistoryContainer">
+              <a class="panel-block is-active" id="Chapel Hill">
+                Chapel Hill
+              </a>
+              <a class="panel-block" id="San Francisco">
+                San Francisco
+              </a>
+              <a class="panel-block" id="Chicago">
+                Chicago
+              </a>
+            </div>
             <div class="panel-block">
-              <button class="button is-link is-outlined is-danger is-fullwidth">
+              <button id="clear" class="button is-link is-outlined is-danger is-fullwidth">
                 Clear History
               </button>
             </div>
