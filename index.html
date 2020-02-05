@@ -24,9 +24,7 @@
       </div>
     
       <div class="navbar-end">
-        <div class="navbar-item">
-          Your location is: <span id="headerCity"></span>
-        </div>
+        <div class="navbar-item" id="headerCity"></div>
       </div>
 
     </div>
@@ -47,15 +45,20 @@
             <div class="tile is-parent">
 
             <article class="tile is-child box" style="text-align:center">
-              <p class="title" id="currentCity"></p>
-              <p class="subtitle" id="currentDate"></p>
+              <div class="columns is-vcentered">
+                <div class="column">
+                  <p class="title" id="currentCity"></p>
+                  <p class="subtitle" id="currentDate"></p>
+                  <img id="currentIcon">
+                </div>
               
-              <div class="content">
-                <img id="currentIcon">
-                <div id="currentTemperature"></div>
-                <div id="currentHumidity"></div>
-                <div id="currentWindSpeed"></div>
-                <div id="currentUVIndex"></div>
+              <div class="column">
+                  <div id="currentTemperature"></div>
+                  <div id="currentHumidity"></div>
+                  <div id="currentWindSpeed"></div>
+                  <div id="currentUVIndex"></div>
+                </div>
+                
               </div>
             </article>
 

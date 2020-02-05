@@ -2,12 +2,54 @@ $(document).ready(function() {
 
 var APIKEY = "386103396a97703ef2671e2dec26e1c2";
 
+//local storage setup
+// if (!localStorage.getItem("cityHistory")){
+//   var cityHistory = [
+//     {cityName: "Chapel Hill"}
+//   ]
+// } else {
+//   var cityHistory = JSON.Parse(localStorage.getItem("cityHistory"))
+//   localStorage.setItem("cityHistory", JSON.stringify(plannerTable))
+// }
+
+
+if ("geolocation" in navigator) {
+  console.log('true')
+  /* geolocation is available */
+  navigator.geolocation.getCurrentPosition(function(position){
+    console.log(position);
+    getCurrentFromCoordinates(position.coords.latitude, position.coords.longitude)
+  })
+} else {
+  /* geolocation IS NOT available */
+  console.log('false')
+}
 //should be the current location
-var cityName= "Chapel Hill"
+// var cityName= "Chapel Hill"
 // var startURL="https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&APPID=" + APIKEY;
 
-getCurrentWeather(cityName);
-getFiveDayForecast(cityName)
+// getCurrentWeather(cityName);
+// getFiveDayForecast(cityName)
+
+function getCurrentFromCoordinates(lat, lon){
+  $.ajax({
+    url: "https://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&units=imperial" + "&APPID=" + APIKEY,
+    method: "GET",
+  }).then(function(response){
+    console.log(response)
+    getFiveDayForecast(response.name)
+    addToHistory(response.name)
+    getUVIndex(response.coord.lat, response.coord.lon);
+    $("headerCity").text("Your current location is " + response.name)
+    $("#currentIcon").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
+    $("#headerCity").text(response.name);
+    $("#currentCity").text(response.name);
+    $("#currentDate").text(moment().format('MMMM Do, YYYY'));
+    $("#currentTemperature").text("Current Temperature: " + response.main.temp + "°");
+    $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
+    $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " mph");
+    })
+}
 
 function getCurrentWeather(cityName){
   $.ajax({
