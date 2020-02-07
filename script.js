@@ -2,34 +2,61 @@ $(document).ready(function() {
 
 var APIKEY = "386103396a97703ef2671e2dec26e1c2";
 
-//local storage setup
-// if (!localStorage.getItem("cityHistory")){
-//   var cityHistory = [
-//     {cityName: "Chapel Hill"}
-//   ]
-// } else {
-//   var cityHistory = JSON.Parse(localStorage.getItem("cityHistory"))
-//   localStorage.setItem("cityHistory", JSON.stringify(plannerTable))
-// }
 
+cityHistory=[]
+// local storage setup
+if (!localStorage.getItem("cityHistory")){
+  console.log("no local storage")
+} else {
+  cityHistory = JSON.parse(localStorage.getItem("cityHistory"))
+  // localStorage.setItem("cityHistory", JSON.stringify(cityHistory))
+  createHistoryList(cityHistory);
+}
+
+console.log(cityHistory)
 
 if ("geolocation" in navigator) {
   console.log('true')
-  /* geolocation is available */
+  // geolocation is available /
   navigator.geolocation.getCurrentPosition(function(position){
+    $("#main").removeAttr("style");
     console.log(position);
     getCurrentFromCoordinates(position.coords.latitude, position.coords.longitude)
+  },
+  function(error){
+    // If user doesn't want to use current location
+    if (error.code === error.PERMISSION_DENIED){
+      $("#main").removeAttr("style");
+      if (cityHistory[0]){
+        getCurrentWeather(cityHistory[(cityHistory.length-1)]);
+        getFiveDayForecast(cityHistory[(cityHistory.length-1)]);
+      } else {
+        getCurrentWeather("San Francisco");
+        getFiveDayForecast("San Francisco");
+      }
+    }
   })
 } else {
-  /* geolocation IS NOT available */
-  console.log('false')
+  // geolocation IS NOT available //
+  $("#main").removeAttr("style");
+  if (cityHistory[0]){
+    getCurrentWeather(cityHistory[0]);
+    getFiveDayForecast(cityHistory[0]);
+  } else {
+    getCurrentWeather("San Francisco");
+    getFiveDayForecast("San Francisco");
+  }
 }
-//should be the current location
-// var cityName= "Chapel Hill"
-// var startURL="https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&APPID=" + APIKEY;
 
-// getCurrentWeather(cityName);
-// getFiveDayForecast(cityName)
+function createHistoryList(historyArray){
+  for (i = 0; i < historyArray.length; i++){
+    var newA = $("<a>");
+    newA.attr("class","panel-block");
+    newA.text(historyArray[i]);
+    newA.attr("id", historyArray[i]);
+    $("#cityHistoryContainer").prepend(newA);
+  }
+}
 
 function getCurrentFromCoordinates(lat, lon){
   $.ajax({
@@ -38,13 +65,13 @@ function getCurrentFromCoordinates(lat, lon){
   }).then(function(response){
     console.log(response)
     getFiveDayForecast(response.name)
-    addToHistory(response.name)
+    // addToHistory(response.name)
     getUVIndex(response.coord.lat, response.coord.lon);
     $("#headerCity").text("Current location: " + response.name)
     $("#currentIcon").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
     $("#currentCity").text(response.name);
     $("#currentDate").text(moment().format('MMMM Do, YYYY'));
-    $("#currentTemperature").text("Current Temperature: " + response.main.temp + "°");
+    $("#currentTemperature").text("Current Temperature: " + (response.main.temp.toFixed()) + "°");
     $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
     $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " mph");
     })
@@ -60,7 +87,7 @@ function getCurrentWeather(cityName){
     $("#currentIcon").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
     $("#currentCity").text(response.name);
     $("#currentDate").text(moment().format('MMMM Do, YYYY'));
-    $("#currentTemperature").text("Current Temperature: " + response.main.temp + "°");
+    $("#currentTemperature").text("Current Temperature: " + (response.main.temp.toFixed()) + "°");
     $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
     $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " mph");
     
@@ -74,39 +101,32 @@ function getFiveDayForecast(cityName){
     method: "GET",
   }).then(function(response){
     var fiveDayForecast = [];
-    for (i = 0; i < response.list.length; i++){
+    for (var i = 0; i < response.list.length; i++){
       var hr = (response.list[i].dt_txt.split(" "))[1]
-      if (hr === "12:00:00"){
+      //00:00:00 is 7:00 PM eastern time
+      //I want to set each day's data to around noon, so 18:00 is 1:00pm
+      if (hr === "18:00:00"){
         fiveDayForecast.push(response.list[i])
       }
     }
-    for (i = 0; i < fiveDayForecast.length; i++){
-      $("#day" + (i+1)).empty();
+    for (var j = 0; j < fiveDayForecast.length; j++){
+      $("#day" + (j+1)).empty();
+      var newDayOfWeek = $("<div>");
+      newDayOfWeek.text(moment(fiveDayForecast[j].dt_txt).format("dddd"));
+      newDayOfWeek.attr("style","font-weight:600")
       var newDivDate = $("<div>");
-      newDivDate.text((moment(fiveDayForecast[i].dt_txt).format("MM/DD/YYYY"))
+      newDivDate.text((moment(fiveDayForecast[j].dt_txt).format("MM/DD/YYYY"))
       );
-      var newImgIcon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + fiveDayForecast[i].weather[0].icon + "@2x.png")
+      var newImgIcon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + fiveDayForecast[j].weather[0].icon + "@2x.png")
       var newDivTemp = $("<div>");
-      newDivTemp.text(fiveDayForecast[i].main.temp + "°");
+      newDivTemp.text((fiveDayForecast[j].main.temp.toFixed()) + "°");
       var newDivHumidity = $("<div>");
-      newDivHumidity.text(fiveDayForecast[i].main.humidity + "% Humidity")
+      newDivHumidity.text(fiveDayForecast[j].main.humidity + "% Humidity")
 
-      $("#day" + (i+1)).append(newDivDate, newImgIcon, newDivTemp, newDivHumidity);
-
+      $("#day" + (j+1)).append(newDayOfWeek, newDivDate, newImgIcon, newDivTemp, newDivHumidity);
     }
     console.log(response)
     console.log(fiveDayForecast)
-
-    // for(var i = 0; i <= 5; i++){
-    //   var newDivDate = $("<div>")
-    //   newDivDate.text(response.list[(i+7) + (i*8)].dt_txt);
-    //   (console.log(response.list[(i+7) + (i*8)].dt_txt))
-    //   var newDivTemp = $("<div>")
-    //   newDivTemp.text(response.list[(i+7) + (i*8)].main.temp);
-
-    //   $("#day" + (i+1)).append(newDivDate);
-    //   $("#day" + (i+1)).append(newDivTemp);
-    // }
   })
 }
 
@@ -121,6 +141,9 @@ function getUVIndex(lat, lon){
 }
 
 function addToHistory(cityName){
+  cityHistory.push(cityName);
+  localStorage.setItem("cityHistory", JSON.stringify(cityHistory))
+  console.log(cityHistory, "this is the city history")
   var newA = $("<a>");
   newA.attr("class","panel-block");
   newA.text(cityName);
@@ -129,7 +152,8 @@ function addToHistory(cityName){
 }
 
 function clear(){
-  $("#cityHistoryContainer").text("")
+  $("#cityHistoryContainer").text("");
+  localStorage.clear();
 }
 
 // https://www.hashbangcode.com/article/prevent-enter-key-submitting-forms-jquery
@@ -150,7 +174,7 @@ $("#citySearch").on('keydown', function(e){
 $("#cityHistoryContainer").on('click', function(e){
   if (e.target.matches('a')) {
     e.preventDefault();
-    // change this later to data id
+    // change this later to data id?
     var cityName= (e.target.id);
     console.log(cityName);
     getCurrentWeather(cityName);
