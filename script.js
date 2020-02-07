@@ -40,9 +40,8 @@ function getCurrentFromCoordinates(lat, lon){
     getFiveDayForecast(response.name)
     addToHistory(response.name)
     getUVIndex(response.coord.lat, response.coord.lon);
-    $("headerCity").text("Your current location is " + response.name)
-    $("#currentIcon").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
-    $("#headerCity").text(response.name);
+    $("#headerCity").text("Current location: " + response.name)
+    $("#currentIcon").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
     $("#currentCity").text(response.name);
     $("#currentDate").text(moment().format('MMMM Do, YYYY'));
     $("#currentTemperature").text("Current Temperature: " + response.main.temp + "°");
@@ -58,8 +57,7 @@ function getCurrentWeather(cityName){
   }).then(function(response){
     console.log(response)
     getUVIndex(response.coord.lat, response.coord.lon);
-    $("#currentIcon").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
-    $("#headerCity").text(response.name);
+    $("#currentIcon").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
     $("#currentCity").text(response.name);
     $("#currentDate").text(moment().format('MMMM Do, YYYY'));
     $("#currentTemperature").text("Current Temperature: " + response.main.temp + "°");
@@ -87,7 +85,7 @@ function getFiveDayForecast(cityName){
       var newDivDate = $("<div>");
       newDivDate.text((moment(fiveDayForecast[i].dt_txt).format("MM/DD/YYYY"))
       );
-      var newImgIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + fiveDayForecast[i].weather[0].icon + "@2x.png")
+      var newImgIcon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + fiveDayForecast[i].weather[0].icon + "@2x.png")
       var newDivTemp = $("<div>");
       newDivTemp.text(fiveDayForecast[i].main.temp + "°");
       var newDivHumidity = $("<div>");
@@ -114,7 +112,7 @@ function getFiveDayForecast(cityName){
 
 function getUVIndex(lat, lon){
   $.ajax({
-    url: "http://api.openweathermap.org/data/2.5/uvi/forecast?&lat=" + lat + "&lon=" + lon + "&cnt=1" + "&APPID=" + APIKEY,
+    url: "https://api.openweathermap.org/data/2.5/uvi/forecast?&lat=" + lat + "&lon=" + lon + "&cnt=1" + "&APPID=" + APIKEY,
     method:"GET",
   }).then(function(response){
     console.log(response)
@@ -139,6 +137,7 @@ $("#citySearch").on('keydown', function(e){
   if (e.keyCode == 13) {
     e.preventDefault();
     var cityName= $(this).val()
+    $(this).val('');
     var queryURL="https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&APPID=" + APIKEY;
     // console.log(queryURL)
     addToHistory(cityName);
