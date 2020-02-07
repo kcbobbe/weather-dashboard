@@ -19,6 +19,7 @@ if ("geolocation" in navigator) {
   console.log('true')
   // geolocation is available /
   navigator.geolocation.getCurrentPosition(function(position){
+    $("progress").attr("style", "display:none")
     $("#main").removeAttr("style");
     console.log(position);
     getCurrentFromCoordinates(position.coords.latitude, position.coords.longitude)
@@ -26,6 +27,7 @@ if ("geolocation" in navigator) {
   function(error){
     // If user doesn't want to use current location
     if (error.code === error.PERMISSION_DENIED){
+      $("#progressBar").attr("style", "display:none")
       $("#main").removeAttr("style");
       if (cityHistory[0]){
         getCurrentWeather(cityHistory[(cityHistory.length-1)]);
