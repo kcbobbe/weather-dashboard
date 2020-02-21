@@ -1,4 +1,3 @@
-#Weather Dashboard
 ### Weather Forecasts at a Glance
 https://kcbobbe.github.io/weather-dashboard/
 
@@ -28,6 +27,21 @@ This web application was created using HTML, CSS, JavaScript, and jQuery. The Bu
 
 
 ## Credits
+OpenWeather API
+https://openweathermap.org/api
+
+Geolocation API
+https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+
+Moment.js
+https://momentjs.com/
+
+Bulma
+https://bulma.io/
+
+Submitting search using the enter key
+https://www.hashbangcode.com/article/prevent-enter-key-submitting-forms-jquery
+
 
 
 ## License
