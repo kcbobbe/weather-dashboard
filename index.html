@@ -1,145 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Weather Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./script.js"></script>
-  </head>
-  <body>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <h1 class="navbar-item subtitle">
-          Weather Dashboard
-        </h1>
-      </div>
-    <div class="navbar-menu">  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="./script.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <h1 class="navbar-item subtitle">
+        Weather Dashboard
+      </h1>
+    </div>
+    <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item" id="headerCity"></div>
       </div>
-
     </div>
-    </nav>
-
-    <progress id="progressBar" class="progress is-medium is-primary" style="border-radius:0;"></progress>
-
-    <div class="columns is-desktop" id="main" style="display:none">
-
-      <div class="column">
-
-
-          <!-- start current weather tile -->
-          <section class="section">
-            <div class="tile is-ancestor">
-              <div class="tile is-parent">
-
+  </nav>
+  <!-- loading bar -->
+  <progress id="progressBar" class="progress is-medium is-primary" style="border-radius:0;"></progress>
+  <!-- main body -->
+  <div class="columns is-desktop" id="main" style="display:none">
+    <div class="column">
+      <!-- start current weather tile -->
+      <section class="section">
+        <div class="tile is-ancestor">
+          <div class="tile is-parent">
             <article class="tile is-child box" style="text-align:center">
-
               <div class="columns is-vcentered">
                 <div class="column">
                   <p class="title" id="currentCity"></p>
                   <p class="subtitle" id="currentDate"></p>
                   <img id="currentIcon" style="margin-top: -1.5em">
                 </div>
-              
-              <div class="column" style="font-weight:600;">
+                <div class="column" style="font-weight:600;">
                   <div id="currentTemperature"></div>
                   <div id="currentHumidity"></div>
                   <div id="currentWindSpeed"></div>
                   <div id="currentUVIndex"></div>
                 </div>
-                
               </div>
             </article>
-
-            </div>
           </div>
-                    <!-- end current weather tile -->
+        </div>
+        <!-- end current weather tile -->
 
- <!-- start 5 day forecast tile -->
-          <div class="tile is-ancestor">
-            <div class="tile is-parent">
+        <!-- start 5 day forecast tile -->
+        <div class="tile is-ancestor">
+          <div class="tile is-parent">
             <article class="tile is-child" style="text-align:center">
               <p class="subtitle" style="font-weight: 600">5 Day Forecast</p>
             </article>
-            </div>
           </div>
-
-          <div class="tile is-ancestor">
-
-            <div class="tile is-parent">
-              <article class="tile is-child box"  style="text-align:center">
-                <div class="content" id="day1">
-                </div>
-              </article>
-            </div>
-
-            <div class="tile is-parent">
-              <article class="tile is-child box" style="text-align:center">
-                <div class="content" id="day2">
-                </div>
-              </article>
-            </div>
-
-            <div class="tile is-parent">
-              <article class="tile is-child box" id="day3" style="text-align:center">
-              </article>
-            </div>
-
-            <div class="tile is-parent">
-              <article class="tile is-child box" id="day4" style="text-align:center">
-              </article>
-            </div>
-
-            <div class="tile is-parent">
-              <article class="tile is-child box" id="day5" style="text-align:center">
-              </article>
-            </div>
-
+        </div>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent">
+            <article class="tile is-child box" id="day1" style="text-align:center"></article>
           </div>
-
-<!-- end 5 day tile -->
-
-        </section>
-      </div>
-
-         
-        <!-- </section> -->
-<!-- start search panel -->
-      <div class="column is-one-quarter-desktop">
-        <section class="section">
-          <nav class="panel">
-            <p class="panel-heading" style="font-size:medium; text-align:center">
-              Search for a city
+          <div class="tile is-parent">
+            <article class="tile is-child box" id="day2" style="text-align:center"></article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child box" id="day3" style="text-align:center"></article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child box" id="day4" style="text-align:center"></article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child box" id="day5" style="text-align:center"></article>
+          </div>
+        </div>
+        <!-- end 5 day tile -->
+      </section>
+    </div>
+    <!-- </section> -->
+    <!-- start search panel -->
+    <div class="column is-one-quarter-desktop">
+      <section class="section">
+        <nav class="panel">
+          <p class="panel-heading" style="font-size:medium; text-align:center">
+            Search for a city
+          </p>
+          <div class="panel-block">
+            <p class="control has-icons-left">
+              <input id="citySearch" class="input" type="text" placeholder="Search">
+              <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
             </p>
-            <div class="panel-block">
-              <p class="control has-icons-left">
-                <input id="citySearch" class="input" type="text" placeholder="Search">
-                <span class="icon is-left">
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </span>
-              </p>
-            </div>
-            <div id="cityHistoryContainer">
-            </div>
-            <div class="panel-block">
-              <button id="clear" class="button is-link is-outlined is-danger is-fullwidth">
-                Clear History
-              </button>
-            </div>
-          </nav>
-        </section>
-      </div>
-      <!-- emd search panel -->
+          </div>
+          <!-- insert searched cities below -->
+          <div id="cityHistoryContainer"></div>
+          <div class="panel-block">
+            <button id="clear" class="button is-link is-outlined is-danger is-fullwidth">
+              Clear History
+            </button>
+          </div>
+        </nav>
+      </section>
+    </div>
+    <!-- end search panel -->
+  </div>
+</body>
 
-  </div>    
-
-
-      
-  </body>
 </html>
