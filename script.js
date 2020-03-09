@@ -1,13 +1,10 @@
 $(document).ready(function () {
-
+  
   var APIKEY = "386103396a97703ef2671e2dec26e1c2";
-
-
-  var cityHistory = []
   // local storage setup
-  if (!localStorage.getItem("cityHistory")) {} else {
-    cityHistory = JSON.parse(localStorage.getItem("cityHistory"))
-    // localStorage.setItem("cityHistory", JSON.stringify(cityHistory))
+  var cityHistory = [];
+  if (localStorage.getItem("cityHistory")) {
+    cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
     createHistoryList(cityHistory);
   }
 
@@ -16,12 +13,12 @@ $(document).ready(function () {
     navigator.geolocation.getCurrentPosition(function (position) {
         $("progress").attr("style", "display:none")
         $("#main").removeAttr("style");
-        getCurrentFromCoordinates(position.coords.latitude, position.coords.longitude)
+        getCurrentFromCoordinates(position.coords.latitude, position.coords.longitude);
       },
       function (error) {
         // If user doesn't want to use current location
         if (error.code === error.PERMISSION_DENIED) {
-          $("#progressBar").attr("style", "display:none")
+          $("#progressBar").attr("style", "display:none");
           $("#main").removeAttr("style");
           if (cityHistory[0]) {
             getCurrentWeather(cityHistory[(cityHistory.length - 1)]);
@@ -34,10 +31,11 @@ $(document).ready(function () {
       })
   } else {
     // geolocation IS NOT available //
+    $("#progressBar").attr("style", "display:none");
     $("#main").removeAttr("style");
     if (cityHistory[0]) {
-      getCurrentWeather(cityHistory[0]);
-      getFiveDayForecast(cityHistory[0]);
+      getCurrentWeather(cityHistory[cityHistory.length -1]);
+      getFiveDayForecast(cityHistory[cityHistory.length-1]);
     } else {
       getCurrentWeather("San Francisco");
       getFiveDayForecast("San Francisco");
@@ -115,7 +113,6 @@ $(document).ready(function () {
         newDivTemp.text((fiveDayForecast[j].main.temp.toFixed()) + "°");
         var newDivHumidity = $("<div>");
         newDivHumidity.text(fiveDayForecast[j].main.humidity + "% Humidity")
-
         $("#day" + (j + 1)).append(newDayOfWeek, newDivDate, newImgIcon, newDivTemp, newDivHumidity);
       }
     })
@@ -156,7 +153,6 @@ $(document).ready(function () {
       addToHistory(cityName);
       getCurrentWeather(cityName);
       getFiveDayForecast(cityName);
-
     }
   })
 
